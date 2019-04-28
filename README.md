@@ -97,14 +97,13 @@ for err in errors:
     logging.log(message)
 ```
 
-By default, the output is plain text, which is good for log files. You can get colors🌈 if you call any of the mentioned functions with `style='darkbg'` or `style='lightbg'` (or `'darkbg2'` or `'lightbg2'`).
-<img src="https://raw.githubusercontent.com/cknd/stackprinter/feature_colorschemes/darkbg.png" width="300"> <img src="https://raw.githubusercontent.com/cknd/stackprinter/feature_colorschemes/notebook.png" width="300">
-
-(It's an attempt at [semantic highlighting](https://medium.com/@brianwill/making-semantic-highlighting-useful-9aeac92411df), i.e. the colors follow the different variables instead of the language syntax. Also, the jupyter notebook support is a complete hack.)
-
 You can blacklist certain file paths, to make the stack less verbose whenever it runs through those files. For example, if you call `format(exc, suppressed_paths=[r"lib/python.*/site-packages"])`, calls within installed libraries are shrunk to one line each.
 
-For more options & details, for now, [see the docstring of `format()`](https://github.com/cknd/stackprinter/blob/master/stackprinter/__init__.py#L82-L127). All those keyword arguments behave the same in `show` and `set_excepthook`. And one day there might be proper html docs.
+By default, the output is plain text, which is good for log files. You get colors🌈 by passing `style='darkbg'` or `style='lightbg'` to any of these methods (or `'darkbg2'` or `'lightbg2'`). It's an attempt at [semantic highlighting](https://medium.com/@brianwill/making-semantic-highlighting-useful-9aeac92411df), i.e. the colors follow the different variables instead of the language syntax.
+
+<img src="https://raw.githubusercontent.com/cknd/stackprinter/master/darkbg.png" width="400">   <img src="https://raw.githubusercontent.com/cknd/stackprinter/master/notebook.png" width="400">
+
+For more options etc, for now, [see the docstring of `format()`](https://github.com/cknd/stackprinter/blob/master/stackprinter/__init__.py#L82-L127). All those keyword arguments behave the same in `show` and `set_excepthook`. Maybe one day there will be proper html docs.
 
 ## Printing the current stack of another thread
 Apart from exception tracebacks, you can also print the call stack of any live, running thread. Pass the thread object to `show` or `format`:
@@ -141,7 +140,7 @@ dosomething()
 # (...) +1 million lines
 tp.disable()
 ```
-<img src="https://raw.githubusercontent.com/cknd/stackprinter/feature_colorschemes/trace.png" width="400">
+<img src="https://raw.githubusercontent.com/cknd/stackprinter/master/trace.png" width="300">
 
 # How it works
 
