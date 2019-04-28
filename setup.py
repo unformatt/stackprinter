@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    python_requires=">=3.4",
+    python_requires=">=2.7",
     name="stackprinter",
     version="0.1.6",
     author="cknd",
