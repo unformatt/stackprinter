@@ -150,10 +150,13 @@ def format_exc_info(etype, evalue, tb, style='plaintext', add_summary='auto',
         msg = ''.join(msgs)
 
     except Exception as exc:
+        import sys
         our_tb = traceback.format_exception(exc.__class__,
                                             exc,
-                                            exc.__traceback__,
-                                            chain=False)
+                                            #exc.__traceback__,
+                                            sys.exc_info()[2],
+                                            #chain=False
+                                            )
 
         msg = 'Stackprinter failed:\n%s' % ''.join(our_tb[-2:])
         msg += 'So here is the original traceback at least:\n\n'

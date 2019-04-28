@@ -1,3 +1,4 @@
+from __future__ import print_function
 import sys
 import types
 import warnings
@@ -132,7 +133,8 @@ def format(thing=None, **kwargs):
     elif isinstance(thing, Thread):
         return format_thread(thing, **kwargs)
     elif isinstance(thing, Exception):
-        exc_info = (thing.__class__, thing, thing.__traceback__)
+        # exc_info = (thing.__class__, thing, thing.__traceback__)
+        exc_info = (thing.__class__, thing, sys.exc_info()[2])
         return format(exc_info, **kwargs)
     elif _is_exc_info(thing):
         return fmt.format_exc_info(*thing, **kwargs)

@@ -142,7 +142,9 @@ def get_vars(names, loc, glob):
 
 
 def lookup(name, scopeA, scopeB):
-    basename, *attr_path = name.split('.')
+    # basename, *attr_path = name.split('.')
+    attr_path = name.split('.')
+    basename = attr_path.pop(0)
     if basename in scopeA:
         val = scopeA[basename]
     elif basename in scopeB:

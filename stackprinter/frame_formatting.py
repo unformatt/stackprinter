@@ -9,7 +9,7 @@ import stackprinter.colorschemes as colorschemes
 from stackprinter.prettyprinting import format_value
 from stackprinter.utils import inspect_callable, match, trim_source, get_ansi_tpl
 
-class FrameFormatter():
+class FrameFormatter(object):
     headline_tpl = "File %s, line %s, in %s\n"
     sourceline_tpl = "    %-3s  %s"
     single_sourceline_tpl = "   %s"
@@ -232,7 +232,9 @@ def select_scope(fi, lines, lines_after, show_vals, show_signature,
         def hide(name):
             value = fi.assignments[name]
             if callable(value):
-                qualified_name, path, *_ = inspect_callable(value)
+                # qualified_name, path, *_ = inspect_callable(value)
+                values = inspect_callable(value)
+                qualified_name, path = values[0:2]
                 is_builtin = value.__class__.__name__ == 'builtin_function_or_method'
                 is_boring = is_builtin or (qualified_name == name)
                 is_suppressed = match(path, suppressed_paths)
@@ -269,12 +271,12 @@ class ColorfulFrameFormatter(FrameFormatter):
         lineno = self.tpl('lineno')
 
         self.headline_tpl = header % "File %s%s" + highlight % "%s" + header % ", line %s, in %s\n"
-        self.sourceline_tpl = lineno % super().sourceline_tpl
-        self.marked_sourceline_tpl = arrow_lineno % super().marked_sourceline_tpl
-        self.elipsis_tpl = dots % super().elipsis_tpl
-        self.sep_vars = dots % super().sep_vars
+        self.sourceline_tpl = lineno % super(ColorfulFrameFormatter, self).sourceline_tpl
+        self.marked_sourceline_tpl = arrow_lineno % super(ColorfulFrameFormatter, self).marked_sourceline_tpl
+        self.elipsis_tpl = dots % super(ColorfulFrameFormatter, self).elipsis_tpl
+        self.sep_vars = dots % super(ColorfulFrameFormatter, self).sep_vars
 
-        super().__init__(**kwargs)
+        super(ColorfulFrameFormatter, self).__init__(**kwargs)
 
     def tpl(self, name):
         return get_ansi_tpl(*self.colors[name])

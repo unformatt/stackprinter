@@ -121,8 +121,8 @@ def _tokenize(source_lines):
         [TOKENTYPE, 'string', (startline, startcolumn), (endline, endcol)]
 
     """
-
-    tokenizer = tokenize.generate_tokens(iter(source_lines).__next__)
+    # tokenizer = tokenize.generate_tokens(iter(source_lines).__next__)
+    tokenizer = tokenize.generate_tokens(iter(source_lines).next)
     # Dragons! This is a trick from the `inspect` standard lib module: Using the
     # undocumented method generate_tokens() instead of the official tokenize(),
     # since the latter doesn't accept strings (only `readline()`s). The official

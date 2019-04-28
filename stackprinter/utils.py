@@ -49,7 +49,7 @@ def trim_source(source_map, context):
     indent_type = None
     min_indent = 9000
     for ln in context:
-        (snippet0, *meta0), *remaining_line = source_map[ln]
+        snippet0, meta0, remaining_line = parse_source_map_line(source_map[ln])
 
         if snippet0.startswith('\t'):
             if indent_type == ' ':
@@ -72,12 +72,19 @@ def trim_source(source_map, context):
 
     trimmed_source_map = OrderedDict()
     for ln in context:
-        (snippet0, *meta0), *remaining_line = source_map[ln]
+        snippet0, meta0, remaining_line = parse_source_map_line(source_map[ln])
         if not snippet0.startswith('\n'):
             snippet0 = snippet0[min_indent:]
         trimmed_source_map[ln] = [[snippet0] + meta0] + remaining_line
 
     return trimmed_source_map
+
+
+def parse_source_map_line(line):
+    # (snippet0, *meta0), *remaining_line = line
+    meta0, remaining_line = line[0], line[1:]
+    snippet0, meta0 = meta0[0], meta0[1:]
+    return snippet0, list(meta0), list(remaining_line)
 
 
 
@@ -92,7 +99,8 @@ def get_ansi_tpl(hue, sat, val, bold=False):
     # print(r,g,b,point)
 
     bold_tp = '1;' if bold else ''
-    code_tpl = ('\u001b[%s38;5;%dm' % (bold_tp, point)) + '%s\u001b[0m'
+    # code_tpl = ('\u001b[%s38;5;%dm' % (bold_tp, point)) + '%s\u001b[0m'
+    code_tpl = ('\033[%s38;5;%dm' % (bold_tp, point)) + '%s\033[0m'
     return code_tpl
 
 

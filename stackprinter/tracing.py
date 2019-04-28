@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sys
 import inspect
 
@@ -7,7 +8,7 @@ from stackprinter import prettyprinting as ppr
 from stackprinter.utils import match
 
 
-def trace(*args, suppressed_paths=[], **formatter_kwargs):
+def trace(suppressed_paths=[], *args, **formatter_kwargs):
     """
     Get a decorator to print all calls & returns in a function
 
